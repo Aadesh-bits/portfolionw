@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aadesh Palanpure — AI & ML Engineer. B.Tech student at MIT AOE Pune building intelligent systems at the intersection of software and hardware." />
+  <title>Aadesh Palanpure | AI & ML Engineer</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ================================================================
+       TOKENS
+    ================================================================ */
+    :root {
+      --blue:       #4d8ef5;
+      --blue-glow:  rgba(77,142,245,0.18);
+      --blue-border:rgba(77,142,245,0.28);
+      --teal:       #38d9c0;
+      --amber:      #f5b94d;
+      --bg:         #04080f;
+      --bg2:        #070e1c;
+      --bg3:        #0b1528;
+      --surface:    rgba(255,255,255,0.032);
+      --surface2:   rgba(255,255,255,0.058);
+      --border:     rgba(255,255,255,0.065);
+      --border2:    rgba(77,142,245,0.3);
+      --txt1:       #e8eeff;
+      --txt2:       #7e95be;
+      --txt3:       #3f5070;
+      --nav-h:      68px;
+      --r:          12px;
+      --ease:       cubic-bezier(0.22,1,0.36,1);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--nav-h);
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--txt2);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    ::selection { background: rgba(77,142,245,0.3); color: var(--txt1); }
+
+    /* ================================================================
+       BACKGROUND ATMOSPHERE
+    ================================================================ */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background: var(--bg);
+    }
+
+    /* Gradient orbs */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: -2;
+      opacity: 0.55;
+    }
+    .bg-orb-1 {
+      width: 700px; height: 700px;
+      top: -200px; left: -150px;
+      background: radial-gradient(circle, rgba(20,55,130,0.6) 0%, transparent 70%);
+    }
+    .bg-orb-2 {
+      width: 500px; height: 500px;
+      bottom: 10%; right: -100px;
+      background: radial-gradient(circle, rgba(15,80,100,0.5) 0%, transparent 70%);
+    }
+    .bg-orb-3 {
+      width: 400px; height: 400px;
+      top: 50%; left: 40%;
+      background: radial-gradient(circle, rgba(30,40,100,0.3) 0%, transparent 70%);
+    }
+
+    /* Dot-grid texture */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 20%, black 30%, transparent 100%);
+    }
+
+    /* ================================================================
+       CURSOR GLOW (desktop only)
+    ================================================================ */
+    .cursor-glow {
+      position: fixed;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(77,142,245,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: opacity 0.4s;
+    }
+
+    /* ================================================================
+       NAV
+    ================================================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      background: rgba(4,8,15,0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(4,8,15,0.94);
+    }
+
+    .nav-logo {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--txt1);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-logo-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 10px var(--blue);
+      animation: pulse-dot 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.5; transform:scale(0.7); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      padding: 6px 13px;
+      border-radius: 8px;
+      color: var(--txt2);
+      text-decoration: none;
+      font-size: 0.865rem;
+      font-weight: 500;
+      transition: color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover { color: var(--txt1); background: var(--surface2); }
+
+    .nav-cta {
+      margin-left: 8px;
+      padding: 7px 16px !important;
+      background: var(--blue) !important;
+      color: #fff !important;
+      border-radius: 8px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: #6ba3fa !important; transform: translateY(-1px); }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 2px;
+      background: var(--txt2); border-radius: 2px;
+      transition: 0.3s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    /* ================================================================
+       SECTION BASE
+    ================================================================ */
+    section {
+      padding: 120px 6% 90px;
+      position: relative;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px; height: 1px;
+      background: var(--blue);
+    }
+
+    .section-h {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--txt1);
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--txt3);
+      max-width: 500px;
+      margin-bottom: 56px;
+      line-height: 1.75;
+    }
+
+    /* ================================================================
+       HERO
+    ================================================================ */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: calc(var(--nav-h) + 60px);
+      padding-bottom: 80px;
+    }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* Left: text */
+    .hero-left {}
+
+    .hero-available {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56,217,192,0.08);
+      border: 1px solid rgba(56,217,192,0.22);
+      border-radius: 100px;
+      padding: 5px 14px 5px 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: 28px;
+      width: fit-content;
+    }
+
+    .hero-available-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    .hero-name {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(3rem, 6.5vw, 5rem);
+      font-weight: 900;
+      color: var(--txt1);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .hero-name em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--blue);
+      letter-spacing: -1px;
+    }
+
+    .hero-role {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 500;
+      color: var(--txt2);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-role-sep {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--txt3);
+    }
+
+    .hero-desc {
+      font-size: 1.02rem;
+      color: var(--txt2);
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: 40px;
+    }
+
+    .hero-desc strong { color: var(--txt1); font-weight: 600; }
+
+    /* Stats row */
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {}
+    .hero-stat-n {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--txt1);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .hero-stat-n span { color: var(--blue); }
+    .hero-stat-l {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--txt3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 3px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Socials inline */
+    .hero-social-sep { width: 1px; height: 28px; background: var(--border); margin: 0 4px; }
+
+    .hero-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--txt2);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.25s var(--ease);
+    }
+    .hero-social-link:hover {
+      background: var(--blue-glow);
+      border-color: var(--blue-border);
+      color: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    /* Right: profile visual */
+    .hero-right {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .profile-frame {
+      position: relative;
+      width: 300px;
+    }
+
+    /* Main image */
+    .profile-img-wrap {
+      width: 300px; height: 360px;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border2);
+      position: relative;
+      background: var(--bg3);
+    }
+
+    .profile-img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, transparent 50%, rgba(4,8,15,0.6) 100%);
+      z-index: 1;
+    }
+
+    .profile-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(8%);
+      transition: filter 0.4s;
+    }
+    .profile-img-wrap:hover .profile-img { filter: grayscale(0%); }
+
+    /* Decorative corner marks */
+    .corner-mark {
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: var(--blue);
+      border-style: solid;
+      border-width: 0;
+      opacity: 0.6;
+    }
+    .corner-mark.tl { top:-8px; left:-8px; border-top-width:2px; border-left-width:2px; border-radius:3px 0 0 0; }
+    .corner-mark.tr { top:-8px; right:-8px; border-top-width:2px; border-right-width:2px; border-radius:0 3px 0 0; }
+    .corner-mark.bl { bottom:-8px; left:-8px; border-bottom-width:2px; border-left-width:2px; border-radius:0 0 0 3px; }
+    .corner-mark.br { bottom:-8px; right:-8px; border-bottom-width:2px; border-right-width:2px; border-radius:0 0 3px 0; }
+
+    /* Floating cards */
+    .float-card {
+      position: absolute;
+      background: rgba(7,14,28,0.92);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 10px 14px;
+      backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      font-size: 0.78rem;
+      color: var(--txt1);
+      font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .float-card-2 { animation-delay: -2s; animation-duration: 5s; }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .float-card-icon {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      background: var(--blue-glow);
+      border: 1px solid var(--blue-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .float-card-sub {
+      font-size: 0.68rem;
+      color: var(--txt3);
+      font-weight: 400;
+      margin-top: 1px;
+    }
+
+    .fc-edu  { bottom: -16px; left: -40px; }
+    .fc-stat { top: -16px; right: -40px; }
+
+    /* ================================================================
+       BUTTONS
+    ================================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 9px;
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s var(--ease);
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(77,142,245,0.3);
+    }
+    .btn-primary:hover {
+      background: #6ba3fa;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(77,142,245,0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--txt1);
+      border: 1px solid var(--border2);
+    }
+    .btn-outline:hover {
+      background: var(--blue-glow);
+      border-color: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--txt2);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      background: var(--surface2);
+      color: var(--txt1);
+    }
+
+    /* ================================================================
+       SKILLS SECTION
+    ================================================================ */
+    #skills { background: var(--bg2); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px 24px;
+      transition: all 0.3s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .skill-card:hover {
+      background: var(--surface2);
+      border-color: var(--border2);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(77,142,245,0.1);
+    }
+
+    .skill-card:hover::before { opacity: 1; }
+
+    .skill-icon {
+      width: 50px; height: 50px;
+      border-radius: 13px;
+      background: var(--blue-glow);
+      border: 1px solid var(--blue-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--blue);
+      margin-bottom: 18px;
+      transition: 0.3s;
+    }
+
+    .skill-card:hover .skill-icon {
+      background: rgba(77,142,245,0.22);
+      box-shadow: 0 0 20px rgba(77,142,245,0.2);
+    }
+
+    .skill-card h3 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--txt1);
+      margin-bottom: 8px;
+    }
+
+    .skill-card p {
+      font-size: 0.83rem;
+      color: var(--txt3);
+      line-height: 1.6;
+    }
+
+    /* Proficiency bar */
+    .skill-bar-wrap {
+      margin-top: 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 100px;
+      height: 3px;
+      overflow: hidden;
+    }
+
+    .skill-bar {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+      transform-origin: left;
+      animation: bar-grow 1.2s var(--ease) both;
+      animation-play-state: paused;
+    }
+
+    .skill-card.visible .skill-bar { animation-play-state: running; }
+
+    @keyframes bar-grow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    /* ================================================================
+       PROJECTS SECTION
+    ================================================================ */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: radial-gradient(circle at 70% 20%, rgba(77,142,245,0.06), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .project-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    .project-card:hover::after { opacity: 1; }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .project-icon {
+      width: 46px; height: 46px;
+      border-radius: 11px;
+      background: var(--blue-glow);
+      border: 1px solid var(--blue-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      color: var(--blue);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .project-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 7px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--txt3);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: 0.2s;
+    }
+    .project-link:hover {
+      background: var(--blue-glow);
+      border-color: var(--blue-border);
+      color: var(--blue);
+    }
+
+    .project-card h3 {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--txt1);
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    /* Problem / Solution / Impact structure */
+    .project-psi {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .psi-row {
+      display: flex;
+      gap: 10px;
+      font-size: 0.84rem;
+    }
+
+    .psi-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--blue);
+      opacity: 0.7;
+      min-width: 58px;
+      padding-top: 2px;
+    }
+
+    .psi-text { color: var(--txt2); line-height: 1.55; }
+
+    .project-metric {
+      background: rgba(56,217,192,0.07);
+      border: 1px solid rgba(56,217,192,0.18);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      background: var(--blue-glow);
+      color: #7eb8f7;
+      border: 1px solid rgba(77,142,245,0.14);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ================================================================
+       CERTIFICATIONS SECTION
+    ================================================================ */
+    #achievements { background: var(--bg2); }
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .cert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.3s var(--ease);
+      gap: 0;
+    }
+
+    .cert-card:hover {
+      background: var(--surface2);
+      border-color: var(--border2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .cert-icon-wrap {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--blue-glow);
+      border: 1px solid var(--blue-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: var(--blue);
+      margin-bottom: 14px;
+    }
+
+    .cert-card h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--txt1);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .cert-card p {
+      font-size: 0.78rem;
+      color: var(--txt3);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .btn-cert {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 7px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-decoration: none;
+      background: var(--blue-glow);
+      color: var(--blue);
+      border: 1px solid var(--blue-border);
+      transition: 0.25s;
+      font-family: 'Cabinet Grotesk', sans-serif;
+    }
+    .btn-cert:hover {
+      background: rgba(77,142,245,0.22);
+      border-color: rgba(77,142,245,0.5);
+      transform: translateY(-1px);
+    }
+
+    /* ── Sub-heading divider ── */
+    .sub-heading {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 52px 0 24px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--txt1);
+      font-family: 'Cabinet Grotesk', sans-serif;
+    }
+    .sub-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Achievements */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+    }
+
+    .ach-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s var(--ease);
+    }
+
+    .ach-card:hover {
+      background: var(--surface2);
+      border-color: var(--border2);
+      transform: translateX(4px);
+    }
+
+    .ach-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: var(--blue-glow);
+      border: 1px solid var(--blue-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .ach-card h3 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--txt1);
+      margin-bottom: 3px;
+    }
+    .ach-card p {
+      font-size: 0.79rem;
+      color: var(--txt3);
+      line-height: 1.4;
+    }
+
+    /* ================================================================
+       ABOUT SECTION
+    ================================================================ */
+    #about { background: var(--bg); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+    }
+
+    .about-card h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--txt1);
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .about-card p {
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: var(--txt2);
+      margin-bottom: 14px;
+    }
+
+    .about-card strong { color: var(--txt1); font-weight: 600; }
+
+    .about-card p:last-of-type { margin-bottom: 0; }
+
+    .about-actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Contact card */
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .contact-card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-row:last-child { border-bottom: none; }
+
+    .c-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: var(--blue-glow);
+      border: 1px solid var(--blue-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .c-label {
+      font-size: 0.69rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--txt3);
+      margin-bottom: 1px;
+    }
+
+    .c-value {
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--txt1);
+    }
+
+    .c-value a {
+      color: var(--blue);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .c-value a:hover { color: #7eb8f7; text-decoration: underline; }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    footer {
+      padding: 28px 6%;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: var(--bg);
+    }
+
+    .footer-left {
+      font-size: 0.82rem;
+      color: var(--txt3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--txt3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--blue); }
+
+    /* ================================================================
+       SCROLL-IN ANIMATIONS
+    ================================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(28px);
+      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Staggered children */
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+    }
+    .stagger.visible > *:nth-child(1)  { opacity:1; transform:none; transition-delay:0.05s; }
+    .stagger.visible > *:nth-child(2)  { opacity:1; transform:none; transition-delay:0.12s; }
+    .stagger.visible > *:nth-child(3)  { opacity:1; transform:none; transition-delay:0.19s; }
+    .stagger.visible > *:nth-child(4)  { opacity:1; transform:none; transition-delay:0.26s; }
+    .stagger.visible > *:nth-child(5)  { opacity:1; transform:none; transition-delay:0.33s; }
+    .stagger.visible > *:nth-child(6)  { opacity:1; transform:none; transition-delay:0.40s; }
+    .stagger.visible > *:nth-child(7)  { opacity:1; transform:none; transition-delay:0.47s; }
+    .stagger.visible > *:nth-child(8)  { opacity:1; transform:none; transition-delay:0.54s; }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 980px) {
+      .hero-wrap     { grid-template-columns: 1fr; gap: 60px; }
+      .hero-right    { order: -1; display: flex; justify-content: center; }
+      .hero-left     { text-align: center; }
+      .hero-available, .hero-stats, .hero-actions { justify-content: center; }
+      .hero-stats    { justify-content: center; }
+      .hero-desc     { margin: 0 auto 40px; }
+      .about-grid    { grid-template-columns: 1fr; }
+      .fc-edu        { left: auto; right: -20px; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 90px 5% 70px; }
+      nav     { padding: 0 5%; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: var(--nav-h);
+        left: 0; right: 0;
+        background: rgba(4,8,15,0.98);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 5%;
+        flex-direction: column;
+        gap: 4px;
+        backdrop-filter: blur(20px);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 14px; }
+      .nav-toggle { display: flex; }
+      .cursor-glow { display: none; }
+
+      .profile-frame, .profile-img-wrap { width: 240px; height: 290px; }
+      .fc-edu  { left: -10px; }
+      .fc-stat { right: -10px; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-name { letter-spacing: -1px; }
+      .hero-stats { gap: 24px; }
+      .certs-grid { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 380px) {
+      .certs-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       ACTIVE NAV INDICATOR
+    ================================================================ */
+    .nav-links a.active {
+      color: var(--txt1);
+      background: var(--surface2);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Background layers -->
+<div class="bg-canvas"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+<div class="bg-grid"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ================================================================
+     NAVIGATION
+================================================================ -->
+<nav id="mainNav">
+  <a href="#home" class="nav-logo">
+    Aadesh Palanpure
+    <div class="nav-logo-dot"></div>
+  </a>
+
+  <div class="nav-links" id="navLinks">
+    <a href="#home">Home</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#achievements">Certifications</a>
+    <a href="#about">About</a>
+    <a href="resume.pdf" download class="nav-cta"><i class="fa-solid fa-download"></i> Resume</a>
+  </div>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ================================================================
+     HERO SECTION
+================================================================ -->
+<section id="home" aria-label="Introduction">
+  <div class="hero-wrap">
+
+    <!-- Left: Text -->
+    <div class="hero-left reveal-left" id="heroText">
+
+      <div class="hero-available" role="status" aria-label="Open to opportunities">
+        <div class="hero-available-dot"></div>
+        Open to Internships &amp; Research Roles
+      </div>
+
+      <h1 class="hero-name">
+        Aadesh<br>
+        <em>Palanpure</em>
+      </h1>
+
+      <div class="hero-role">
+        <span>AI &amp; ML Engineer</span>
+        <div class="hero-role-sep"></div>
+        <span>MIT AOE, Pune</span>
+        <div class="hero-role-sep"></div>
+        <span>B.Tech 2027</span>
+      </div>
+
+      <p class="hero-desc">
+        I build <strong>intelligent systems</strong> where software meets hardware —
+        from autonomous robots that navigate fire to smart homes that think for themselves.
+        Passionate about machine learning, embedded AI, and making real-world problems
+        solvable with code.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-n">7<span>+</span></div>
+          <div class="hero-stat-l">Certifications</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">3<span>+</span></div>
+          <div class="hero-stat-l">Live Projects</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">7.0</div>
+          <div class="hero-stat-l">IELTS Band</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">
+          View My Work <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a href="resume.pdf" class="btn btn-outline" target="_blank" download>
+          <i class="fa-solid fa-file-arrow-down"></i> Download CV
+        </a>
+
+        <div class="hero-social-sep" aria-hidden="true"></div>
+
+        <a href="https://github.com/aadesh-palanpure" target="_blank" rel="noopener noreferrer"
+           class="hero-social-link" aria-label="GitHub Profile">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://linkedin.com/in/aadesh-palanpure" target="_blank" rel="noopener noreferrer"
+           class="hero-social-link" aria-label="LinkedIn Profile">
+          <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+        <a href="mailto:aadeshpalanpure27@gmail.com"
+           class="hero-social-link" aria-label="Send Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: Profile visual -->
+    <div class="hero-right reveal-right" id="heroVisual">
+      <div class="profile-frame">
+        <!-- Corner decorations -->
+        <div class="corner-mark tl" aria-hidden="true"></div>
+        <div class="corner-mark tr" aria-hidden="true"></div>
+        <div class="corner-mark bl" aria-hidden="true"></div>
+        <div class="corner-mark br" aria-hidden="true"></div>
+
+        <div class="profile-img-wrap">
+          <img src="Aadeshimage.jpeg" alt="Portrait of Aadesh Palanpure" class="profile-img" />
+        </div>
+
+        <!-- Floating badge: Education -->
+        <div class="float-card fc-edu" aria-hidden="true">
+          <div class="float-card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div>
+            <div>MIT AOE, Pune</div>
+            <div class="float-card-sub">B.Tech AI &amp; ML</div>
+          </div>
+        </div>
+
+        <!-- Floating badge: MHT-CET -->
+        <div class="float-card float-card-2 fc-stat" aria-hidden="true">
+          <div class="float-card-icon"><i class="fa-solid fa-trophy"></i></div>
+          <div>
+            <div>MHT-CET Rank 1</div>
+            <div class="float-card-sub">College Topper</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     SKILLS SECTION
+================================================================ -->
+<section id="skills" aria-labelledby="skills-heading">
+  <div class="reveal">
+    <div class="section-eyebrow">Expertise</div>
+    <h2 class="section-h" id="skills-heading">Technical Skills</h2>
+    <p class="section-sub">Core technologies I use to design and deliver AI-driven solutions — from model training to hardware deployment.</p>
+  </div>
+
+  <div class="skills-grid stagger" role="list">
+
+    <div class="skill-card" role="listitem">
+      <div class="skill-icon" aria-hidden="true"><i class="fa-solid fa-brain"></i></div>
+      <h3>Machine Learning</h3>
+      <p>Supervised &amp; unsupervised learning, model training, evaluation, and production deployment pipelines.</p>
+      <div class="skill-bar-wrap" role="meter" aria-label="Proficiency: 80%">
+        <div class="skill-bar" style="width:80%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card" role="listitem">
+      <div class="skill-icon" aria-hidden="true"><i class="fa-brands fa-python"></i></div>
+      <h3>Python &amp; C</h3>
+      <p>Algorithmic problem-solving, data manipulation with NumPy/Pandas, and systems-level programming.</p>
+      <div class="skill-bar-wrap" role="meter" aria-label="Proficiency: 85%">
+        <div class="skill-bar" style="width:85%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card" role="listitem">
+      <div class="skill-icon" aria-hidden="true"><i class="fa-solid fa-microchip"></i></div>
+      <h3>IoT &amp; Embedded Systems</h3>
+      <p>Hardware design with ESP32 &amp; Arduino — real-time sensor integration, firmware, and wireless protocols.</p>
+      <div class="skill-bar-wrap" role="meter" aria-label="Proficiency: 78%">
+        <div class="skill-bar" style="width:78%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card" role="listitem">
+      <div class="skill-icon" aria-hidden="true"><i class="fa-solid fa-database"></i></div>
+      <h3>SQL &amp; Data Analysis</h3>
+      <p>Relational database design, complex querying, and extracting business-critical insights from raw data.</p>
+      <div class="skill-bar-wrap" role="meter" aria-label="Proficiency: 80%">
+        <div class="skill-bar" style="width:80%"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     PROJECTS SECTION
+================================================================ -->
+<section id="projects" aria-labelledby="projects-heading">
+  <div class="reveal">
+    <div class="section-eyebrow">Work</div>
+    <h2 class="section-h" id="projects-heading">Featured Projects</h2>
+    <p class="section-sub">Engineering projects demonstrating applied AI, embedded systems, and software development — built to solve real problems.</p>
+  </div>
+
+  <div class="projects-grid stagger">
+
+    <!-- Project 1 -->
+    <article class="project-card" aria-label="Autonomous Firefighting Robot project">
+      <div class="project-header">
+        <div class="project-icon" aria-hidden="true"><i class="fa-solid fa-robot"></i></div>
+        <div class="project-links">
+          <a href="https://github.com/aadesh-palanpure" target="_blank" rel="noopener noreferrer"
+             class="project-link" aria-label="View project on GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </div>
+      <h3>Autonomous Firefighting Robot</h3>
+      <div class="project-psi">
+        <div class="psi-row">
+          <span class="psi-label">Problem</span>
+          <span class="psi-text">Human responders face lethal risk entering burning structures before conditions are assessed.</span>
+        </div>
+        <div class="psi-row">
+          <span class="psi-label">Solution</span>
+          <span class="psi-text">AI-driven robot with flame + IR sensors for real-time fire detection, obstacle avoidance, and automated suppression.</span>
+        </div>
+        <div class="psi-row">
+          <span class="psi-label">Impact</span>
+          <span class="psi-text">Fully autonomous navigation in hazardous environments — zero human intervention required during suppression.</span>
+        </div>
+      </div>
+      <div class="project-metric">
+        <i class="fa-solid fa-chart-line"></i>
+        100% autonomous operation in simulated fire scenarios
+      </div>
+      <div class="project-tags">
+        <span class="tag">Robotics</span>
+        <span class="tag">Embedded C</span>
+        <span class="tag">Sensors</span>
+        <span class="tag">Autonomous Nav</span>
+      </div>
+    </article>
+
+    <!-- Project 2 -->
+    <article class="project-card" aria-label="Smart Home IoT Automation project">
+      <div class="project-header">
+        <div class="project-icon" aria-hidden="true"><i class="fa-solid fa-house-signal"></i></div>
+        <div class="project-links">
+          <a href="https://github.com/aadesh-palanpure" target="_blank" rel="noopener noreferrer"
+             class="project-link" aria-label="View project on GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </div>
+      <h3>Smart Home IoT Automation</h3>
+      <div class="project-psi">
+        <div class="psi-row">
+          <span class="psi-label">Problem</span>
+          <span class="psi-text">Traditional home systems require manual control — inefficient and inflexible for modern living.</span>
+        </div>
+        <div class="psi-row">
+          <span class="psi-label">Solution</span>
+          <span class="psi-text">ESP32-based automation platform with wireless appliance control, environmental sensing, and a custom web dashboard.</span>
+        </div>
+        <div class="psi-row">
+          <span class="psi-label">Impact</span>
+          <span class="psi-text">Real-time remote monitoring with low-power continuous operation — deployable in any home environment.</span>
+        </div>
+      </div>
+      <div class="project-metric">
+        <i class="fa-solid fa-chart-line"></i>
+        Sub-200ms response time over local Wi-Fi network
+      </div>
+      <div class="project-tags">
+        <span class="tag">ESP32</span>
+        <span class="tag">IoT</span>
+        <span class="tag">Web Interface</span>
+        <span class="tag">Automation</span>
+      </div>
+    </article>
+
+    <!-- Project 3 -->
+    <article class="project-card" aria-label="Portfolio Website project">
+      <div class="project-header">
+        <div class="project-icon" aria-hidden="true"><i class="fa-solid fa-laptop-code"></i></div>
+        <div class="project-links">
+          <a href="https://github.com/aadesh-palanpure" target="_blank" rel="noopener noreferrer"
+             class="project-link" aria-label="View source on GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="#home" class="project-link" aria-label="View live site">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+      <h3>AI/ML Portfolio — This Site</h3>
+      <div class="project-psi">
+        <div class="psi-row">
+          <span class="psi-label">Problem</span>
+          <span class="psi-text">Standard student portfolios fail to communicate depth of technical work to recruiters in under 10 seconds.</span>
+        </div>
+        <div class="psi-row">
+          <span class="psi-label">Solution</span>
+          <span class="psi-text">Fully responsive, single-page portfolio using semantic HTML5, CSS3, and vanilla JS — optimised for speed and accessibility.</span>
+        </div>
+        <div class="psi-row">
+          <span class="psi-label">Impact</span>
+          <span class="psi-text">Industry-grade design with scroll animations, ARIA semantics, and a Lighthouse score targeting 95+.</span>
+        </div>
+      </div>
+      <div class="project-metric">
+        <i class="fa-solid fa-chart-line"></i>
+        Targeting 95+ Lighthouse performance score
+      </div>
+      <div class="project-tags">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">A11y</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     CERTIFICATIONS & ACHIEVEMENTS SECTION
+================================================================ -->
+<section id="achievements" aria-labelledby="achievements-heading">
+  <div class="reveal">
+    <div class="section-eyebrow">Credentials</div>
+    <h2 class="section-h" id="achievements-heading">Certifications &amp; Achievements</h2>
+    <p class="section-sub">Verified credentials and recognitions that reflect a commitment to continuous learning and academic excellence.</p>
+  </div>
+
+  <!-- Certifications -->
+  <div class="sub-heading reveal">Certifications</div>
+  <div class="certs-grid stagger">
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap" aria-hidden="true"><i class="fa-solid fa-robot"></i></div>
+      <h3>Claude-101</h3>
+      <p>Prompt engineering principles and responsible AI safety protocols on Anthropic's Claude platform.</p>
+      <a href="claude-101-certificate.pdf" target="_blank" download class="btn-cert" aria-label="View Claude-101 certificate PDF">
+        <i class="fa-solid fa-file-pdf"></i> View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap" aria-hidden="true"><i class="fa-solid fa-network-wired"></i></div>
+      <h3>AI Fluency: Framework &amp; Foundation</h3>
+      <p>Core AI frameworks, architectures, and real-world application strategies.</p>
+      <a href="ai-fluency-framework-certificate.pdf" target="_blank" download class="btn-cert" aria-label="View AI Fluency Framework certificate PDF">
+        <i class="fa-solid fa-file-pdf"></i> View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap" aria-hidden="true"><i class="fa-solid fa-user-graduate"></i></div>
+      <h3>AI Fluency for Students</h3>
+      <p>AI tools for academic research, critical thinking, and productivity enhancement.</p>
+      <a href="ai-fluency-students-certificate.pdf" target="_blank" download class="btn-cert" aria-label="View AI Fluency for Students certificate PDF">
+        <i class="fa-solid fa-file-pdf"></i> View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap" aria-hidden="true"><i class="fa-solid fa-hand-holding-heart"></i></div>
+      <h3>AI Fluency for Nonprofits</h3>
+      <p>Applying AI solutions to improve operational efficiency and social impact.</p>
+      <a href="ai-fluency-nonprofits-certificate.pdf" target="_blank" download class="btn-cert" aria-label="View AI Fluency for Nonprofits certificate PDF">
+        <i class="fa-solid fa-file-pdf"></i> View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap" aria-hidden="true"><i class="fa-brands fa-python"></i></div>
+      <h3>Python Essentials 1</h3>
+      <p>Core Python programming, control flow, functions, and algorithmic problem-solving.</p>
+      <a href="python1-certificate.pdf" target="_blank" download class="btn-cert" aria-label="View Python Essentials 1 certificate PDF">
+        <i class="fa-solid fa-file-pdf"></i> View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap" aria-hidden="true"><i class="fa-brands fa-python"></i></div>
+      <h3>Python Essentials 2</h3>
+      <p>Advanced Python — object-oriented programming, data structures, and file handling.</p>
+      <a href="python2-certificate.pdf" target="_blank" download class="btn-cert" aria-label="View Python Essentials 2 certificate PDF">
+        <i class="fa-solid fa-file-pdf"></i> View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap" aria-hidden="true"><i class="fa-solid fa-database"></i></div>
+      <h3>SQL Certification</h3>
+      <p>Relational database design, advanced querying, joins, and data management best practices.</p>
+      <a href="sql-certificate.pdf" target="_blank" download class="btn-cert" aria-label="View SQL Certification PDF">
+        <i class="fa-solid fa-file-pdf"></i> View Certificate
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Achievements -->
+  <div class="sub-heading reveal" style="margin-top: 60px;">Academic &amp; Extracurricular Achievements</div>
+  <div class="achievements-grid stagger">
+
+    <div class="ach-card">
+      <div class="ach-icon" aria-hidden="true"><i class="fa-solid fa-trophy"></i></div>
+      <div>
+        <h3>1st Rank — MHT-CET</h3>
+        <p>Secured the top rank at the college level, out of the entire incoming cohort.</p>
+      </div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon" aria-hidden="true"><i class="fa-solid fa-language"></i></div>
+      <div>
+        <h3>IELTS — Band 7.0</h3>
+        <p>High English proficiency — demonstrates readiness for global academic and industry environments.</p>
+      </div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon" aria-hidden="true"><i class="fa-solid fa-medal"></i></div>
+      <div>
+        <h3>Extracurricular Excellence</h3>
+        <p>Recognised achievements in sports and the arts — reflecting discipline beyond the technical domain.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     ABOUT SECTION
+================================================================ -->
+<section id="about" aria-labelledby="about-heading">
+  <div class="reveal">
+    <div class="section-eyebrow">About</div>
+    <h2 class="section-h" id="about-heading">The Person Behind the Code</h2>
+    <p class="section-sub">Background, values, and how to connect.</p>
+  </div>
+
+  <div class="about-grid">
+
+    <!-- Bio -->
+    <div class="about-card reveal-left">
+      <h3>Who I Am</h3>
+      <p>
+        I'm <strong>Aadesh Palanpure</strong> — a B.Tech student in
+        <strong>Artificial Intelligence &amp; Machine Learning</strong> at
+        <strong>MIT Academy of Engineering, Pune</strong>.
+      </p>
+      <p>
+        My work lives at the intersection of software intelligence and physical systems.
+        I'm drawn to projects where an algorithm doesn't just run on a screen — it controls
+        a motor, reads a sensor, or makes a decision in the real world. That edge between
+        digital and physical is where I do my most interesting thinking.
+      </p>
+      <p>
+        I believe great engineers are also great communicators. An IELTS Band 7 reflects not
+        just English proficiency, but a commitment to being understood clearly — whether in
+        a codebase, a presentation, or a collaboration with an international team.
+      </p>
+      <p>
+        I'm actively seeking <strong>internships, research collaborations</strong>, and
+        opportunities where I can contribute meaningfully to AI-driven innovation.
+      </p>
+      <div class="about-actions">
+        <a href="https://github.com/aadesh-palanpure" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+        <a href="https://linkedin.com/in/aadesh-palanpure" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+          <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+        </a>
+        <a href="resume.pdf" download class="btn btn-outline">
+          <i class="fa-solid fa-file-arrow-down"></i> Resume
+        </a>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="contact-card reveal-right">
+      <div class="contact-card-title">Get in Touch</div>
+
+      <div class="contact-row">
+        <div class="c-icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+        <div>
+          <div class="c-label">Mobile</div>
+          <div class="c-value">+91 9172566118</div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="c-icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div>
+        <div>
+          <div class="c-label">Email</div>
+          <div class="c-value">
+            <a href="mailto:aadeshpalanpure27@gmail.com">aadeshpalanpure27@gmail.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="c-icon" aria-hidden="true"><i class="fa-brands fa-linkedin-in"></i></div>
+        <div>
+          <div class="c-label">LinkedIn</div>
+          <div class="c-value">
+            <a href="https://linkedin.com/in/aadesh-palanpure" target="_blank" rel="noopener noreferrer">
+              linkedin.com/in/aadesh-palanpure
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="c-icon" aria-hidden="true"><i class="fa-brands fa-github"></i></div>
+        <div>
+          <div class="c-label">GitHub</div>
+          <div class="c-value">
+            <a href="https://github.com/aadesh-palanpure" target="_blank" rel="noopener noreferrer">
+              github.com/aadesh-palanpure
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="c-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <div class="c-label">Location</div>
+          <div class="c-value">Pune, Maharashtra, India</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer>
+  <p class="footer-left">© 2026 Aadesh Palanpure — Built with purpose.</p>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="#home">Home</a>
+    <a href="#projects">Projects</a>
+    <a href="#achievements">Certifications</a>
+    <a href="mailto:aadeshpalanpure27@gmail.com">Contact</a>
+  </nav>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+  /* ── Cursor glow (desktop) ── */
+  const cursorGlow = document.getElementById('cursorGlow');
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => {
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top  = e.clientY + 'px';
+    });
+  }
+
+  /* ── Nav: scroll state + hamburger ── */
+  const nav       = document.getElementById('mainNav');
+  const navToggle = document.getElementById('navToggle');
+  const navLinks  = document.getElementById('navLinks');
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open);
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.classList.remove('open');
+    });
+  });
+
+  /* ── Active nav link on scroll ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navAs    = document.querySelectorAll('.nav-links a[href^="#"]');
+
+  function setActive() {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+    });
+    navAs.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+
+  /* ── Scroll reveal (IntersectionObserver) ── */
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+
+        /* Trigger skill bar animations */
+        entry.target.querySelectorAll && entry.target.querySelectorAll('.skill-card').forEach(c => {
+          c.classList.add('visible');
+        });
+        if (entry.target.classList.contains('skill-card')) {
+          entry.target.classList.add('visible');
+        }
+
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  /* Also observe skill cards individually for bar animation */
+  document.querySelectorAll('.skill-card').forEach(card => observer.observe(card));
+
+  /* ── Hero immediate reveal ── */
+  setTimeout(() => {
+    document.getElementById('heroText').classList.add('visible');
+    document.getElementById('heroVisual').classList.add('visible');
+  }, 150);
+</script>
+
+</body>
+</html>
